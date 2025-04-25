@@ -3,7 +3,6 @@ package game;
 import java.util.Arrays;
 
 public class GameState {
-
     private final Cell[] cells;
 
     private GameState(Cell[] cells) {
@@ -19,38 +18,34 @@ public class GameState {
         return this.cells;
     }
 
-    /**
-     * toString() of GameState will return the string representing
-     * the GameState in JSON format.
-     */
     @Override
     public String toString() {
         return """
-                { "cells": %s}
+                { "cells": %s }
                 """.formatted(Arrays.toString(this.cells));
     }
 
     private static Cell[] getCells(Game game) {
-        Cell cells[] = new Cell[9];
+        Cell[] cells = new Cell[9];
         Board board = game.getBoard();
+
         for (int x = 0; x <= 2; x++) {
             for (int y = 0; y <= 2; y++) {
                 String text = "";
                 boolean playable = false;
                 Player player = board.getCell(x, y);
-                if (player == Player.PLAYER0)
-                    text = "X";
-                else if (player == Player.PLAYER1)
-                    text = "O";
-                else if (player == null) {
-                    playable = true;
-                }
+
+                if (player == Player.PLAYER0) text = "X";
+                else if (player == Player.PLAYER1) text = "O";
+                else if (player == null) playable = true;
+
                 cells[3 * y + x] = new Cell(x, y, text, playable);
             }
         }
         return cells;
     }
 }
+
 
 class Cell {
     private final int x;
@@ -88,7 +83,7 @@ class Cell {
                     "text": "%s",
                     "playable": %b,
                     "x": %d,
-                    "y": %d 
+                    "y": %d
                 }
                 """.formatted(this.text, this.playable, this.x, this.y);
     }
